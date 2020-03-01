@@ -41,3 +41,8 @@ sudo apt-get install -y nodejs
 ```shell script
 vue create <project name>
 ```
+
+## run vue in watch mode
+```shell script
+yarn build --watch
+```
