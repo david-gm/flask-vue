@@ -46,3 +46,11 @@ vue create <project name>
 ```shell script
 yarn build --watch
 ```
+
+## run vue in development and watch mode
+
+- comment out the following lines in vue.config.js as this will build in the directory of flask;
+the development node server will not have access to that directory:
+  - `assetsDir: '../static',`
+  - `outputDir: path.resolve(__dirname, '../../flask-vue/templates'),`
+- run `yarn serve`

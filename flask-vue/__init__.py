@@ -23,6 +23,8 @@ def create_app(test_config=None):
 
     from . import flask_vue
     app.register_blueprint(flask_vue.bp)
+    from . import rest_api
+    app.register_blueprint(rest_api.bp)
     #app.add_url_rule('/', endpoint='index')
 
     return app
