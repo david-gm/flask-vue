@@ -1,13 +1,23 @@
-from flask import (Blueprint, request, render_template, abort, jsonify)
+from flask_restplus import Resource, fields, Namespace
 
-bp = Blueprint('rest_api', __name__, template_folder='templates', url_prefix='/rest')
+api = Namespace('rest', description='a simple rest interface')
+
+person_model = api.model(name='Person', model={
+    'name': fields.String(required=True, description='Name of the person'),
+    'address': fields.List(fields.String, required=True, description='Address of the person'),
+    'age': fields.Integer(required=True, description='Age of the person')
+})
+
+NEW_PERSON = {
+    'name': 'David Gmeindl',
+    'address': ['Austria', 'Graz', 'Hauptplatz 24'],
+    'age': 31
+}
 
 
-@bp.route('/request')
-def request():
-    new_person = {
-        'name': 'David Gmeindl',
-        'address': ['Austria', 'Graz', 'Hauptplatz 24'],
-        'age': 31
-    }
-    return jsonify(new_person)
+@api.route('/person')
+class Person(Resource):
+    @api.doc('get_person')
+    @api.marshal_with(person_model)
+    def get(self):
+        return NEW_PERSON

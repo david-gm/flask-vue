@@ -1,5 +1,6 @@
 import os
 from flask import Flask
+from flask_restplus import Api
 
 
 def create_app(test_config=None):
@@ -23,8 +24,14 @@ def create_app(test_config=None):
 
     from . import flask_vue
     app.register_blueprint(flask_vue.bp)
-    from . import rest_api
-    app.register_blueprint(rest_api.bp)
-    #app.add_url_rule('/', endpoint='index')
+    from .rest_api import api as ns_rest
+    # register API
+    api = Api(app,
+              version='0.1',
+              title='Flask-Vue',
+              description='A simple Flask-vue and mongodb example',
+              # doc describes the route to the swagger documentation
+              doc='/doc/')
+    api.add_namespace(ns_rest)
 
     return app
